@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#1a73e8">
+  <meta name="description" content="Tra cứu địa điểm, ấp, xã, phường, đường tại tỉnh Vĩnh Long (hành chính cũ)">
+  
+  <title>Vĩnh Long - Tra cứu địa điểm</title>
+  
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" href="img/icon-192.png">
+  <link rel="apple-touch-icon" href="img/icon-192.png">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-title">🗺️ Vĩnh Long Maps</div>
+    <div class="header-subtitle">Tra cứu địa điểm hành chính cũ tỉnh Vĩnh Long</div>
+  </header>
+
+  <!-- SEARCH BAR -->
+  <div class="search-container">
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="search-input" placeholder="Tìm ấp, xã, phường, đường..." autocomplete="off">
+      <div id="search-results" class="search-results"></div>
+    </div>
+  </div>
+
+  <!-- ============ PAGES ============ -->
+
+  <!-- HOME PAGE -->
+  <div id="page-home" class="page active">
+    <div class="welcome-card">
+      <h2>🏡 Chào mừng!</h2>
+      <p>Tra cứu thông tin hành chính cũ tỉnh Vĩnh Long trước khi sáp nhập. Bao gồm tất cả ấp, xã, phường, thị trấn và tên đường.</p>
+    </div>
+
+    <div id="stats" class="stats-grid">
+      <!-- Thống kê sẽ được render bởi JS -->
+    </div>
+
+    <h3 style="margin-bottom: 12px; font-size: 16px;">⚡ Truy cập nhanh</h3>
+    <div class="quick-actions">
+      <button class="quick-action-btn" onclick="App.switchPage('browse'); document.querySelector('[data-page=browse]').click();">
+        <span class="qa-icon">📋</span>
+        <span class="qa-text">Duyệt danh sách</span>
+      </button>
+      <button class="quick-action-btn" onclick="document.getElementById('search-input').focus();">
+        <span class="qa-icon">🔍</span>
+        <span class="qa-text">Tìm kiếm</span>
+      </button>
+      <button class="quick-action-btn" onclick="App.switchPage('saved'); document.querySelector('[data-page=saved]').click();">
+        <span class="qa-icon">📌</span>
+        <span class="qa-text">Đã lưu</span>
+      </button>
+      <button class="quick-action-btn" onclick="Navigation.getCurrentPosition().then(pos => { App.showToast('Vị trí: ' + pos.lat.toFixed(4) + ', ' + pos.lng.toFixed(4)); }).catch(e => App.showToast('Không thể lấy vị trí'));">
+        <span class="qa-icon">📍</span>
+        <span class="qa-text">Vị trí của tôi</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- BROWSE PAGE -->
+  <div id="page-browse" class="page">
+    <div id="browse-content">
+      <!-- Nội dung sẽ được render bởi JS -->
+    </div>
+  </div>
+
+  <!-- SAVED PLACES PAGE -->
+  <div id="page-saved" class="page">
+    <div id="saved-content">
+      <!-- Nội dung sẽ được render bởi JS -->
+    </div>
+  </div>
+
+  <!-- INFO PAGE -->
+  <div id="page-info" class="page">
+    <div class="info-card">
+      <h3>ℹ️ Giới thiệu</h3>
+      <p>Ứng dụng tra cứu thông tin hành chính cũ của tỉnh Vĩnh Long, bao gồm tất cả huyện, thành phố, thị xã, xã, phường, thị trấn, ấp và tên đường trước khi sáp nhập.</p>
+    </div>
+
+    <div class="info-card">
+      <h3>📋 Dữ liệu bao gồm</h3>
+      <p>• <strong>1 thành phố:</strong> TP. Vĩnh Long</p>
+      <p>• <strong>1 thị xã:</strong> TX. Bình Minh</p>
+      <p>• <strong>6 huyện:</strong> Long Hồ, Mang Thít, Vũng Liêm, Tam Bình, Bình Tân, Trà Ôn</p>
+      <p>• Đầy đủ xã, phường, thị trấn, ấp/khu phố và tên đường</p>
+    </div>
+
+    <div class="info-card">
+      <h3>🎯 Nguồn dữ liệu & Độ chính xác định vị</h3>
+      <p>• <strong>Danh mục hành chính & tên Ấp/Xã:</strong> Trích xuất chuẩn theo niên giám thống kê và Danh bạ mã định danh bưu chính quốc gia (VNPost) trước các đợt sáp nhập hành chính tỉnh Vĩnh Long.</p>
+      <p>• <strong>Bản chất định vị cấp Ấp/Khóm:</strong> Ở Việt Nam, Ấp là địa bàn dân cư nông thôn rộng lớn, không phải 1 điểm toạ độ đơn lẻ. Hệ thống áp dụng công nghệ <strong>Semantic Geocoding</strong>: gửi trực tiếp truy vấn chuẩn <em>"Ấp [Tên], Xã [Tên], Huyện [Tên], Vĩnh Long"</em> sang Google Maps và OpenStreetMap để định vị đúng Nhà văn hoá, Ban nhân dân ấp và ranh giới dân cư thực tế.</p>
+      <p>• <strong>Định vị GPS thực địa (Độ chính xác cao ±5m):</strong> Khi bạn đi thực tế đến bất kỳ ấp nào, trong mục <em>"Đã lưu"</em> hãy nhấn biểu tượng 🎯 <em>"Lấy GPS thực tế"</em>, hệ thống sẽ chốt toạ độ từ chip GPS điện thoại của bạn với độ chính xác cao nhất.</p>
+    </div>
+
+    <div class="info-card">
+      <h3>🧭 Hướng dẫn sử dụng</h3>
+      <p>• <strong>Tìm kiếm:</strong> Nhập tên ấp, xã, phường hoặc tên đường để tìm ngay lập tức.</p>
+      <p>• <strong>Chỉ đường (🧭):</strong> Tự động kích hoạt Google Maps chỉ lộ trình từ vị trí hiện tại của bạn đến đúng ấp.</p>
+      <p>• <strong>Bản đồ (🗺️ / 🌍):</strong> Xem vị trí vệ tinh Google Maps hoặc xem ranh giới trên OpenStreetMap.</p>
+      <p>• <strong>Lưu trữ (💾):</strong> Lưu danh sách ấp hay đi kèm ghi chú và toạ độ GPS riêng.</p>
+      <p>• <strong>Xuất dữ liệu:</strong> Tải file JSON các địa điểm đã lưu về máy để sao lưu hoặc chia sẻ.</p>
+    </div>
+
+    <div class="info-card">
+      <h3>📱 Cài đặt lên điện thoại</h3>
+      <p>Trên Chrome: Nhấn nút menu (⋮) → "Thêm vào màn hình chính" để sử dụng như ứng dụng.</p>
+      <p>Trên Safari: Nhấn nút chia sẻ (📤) → "Thêm vào màn hình chính".</p>
+    </div>
+
+    <div class="info-card">
+      <h3>⚠️ Lưu ý</h3>
+      <p>Dữ liệu dựa trên phân chia hành chính cũ của tỉnh Vĩnh Long trước khi thực hiện sáp nhập theo nghị quyết của Ủy ban Thường vụ Quốc hội. Tọa độ mang tính tham khảo.</p>
+    </div>
+  </div>
+
+  <!-- MODAL -->
+  <div id="place-modal" class="modal-overlay" onclick="if(event.target===this) App.closeModal()">
+    <div class="modal-container">
+      <div id="modal-content"></div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div id="toast" class="toast"></div>
+
+  <!-- BOTTOM NAVIGATION -->
+  <nav class="bottom-nav">
+    <button class="nav-item active" data-page="home">
+      <span class="nav-icon">🏠</span>
+      <span class="nav-label">Trang chủ</span>
+    </button>
+    <button class="nav-item" data-page="browse">
+      <span class="nav-icon">📋</span>
+      <span class="nav-label">Duyệt</span>
+    </button>
+    <button class="nav-item" data-page="saved">
+      <span class="nav-icon">📌</span>
+      <span class="nav-label">Đã lưu</span>
+    </button>
+    <button class="nav-item" data-page="info">
+      <span class="nav-icon">ℹ️</span>
+      <span class="nav-label">Thông tin</span>
+    </button>
+  </nav>
+
+  <!-- SCRIPTS -->
+  <script src="data/vinhlong-data.js"></script>
+  <script src="js/saved-places.js"></script>
+  <script src="js/search.js"></script>
+  <script src="js/navigation.js"></script>
+  <script src="js/app.js"></script>
+
+  <!-- Register Service Worker for PWA -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then(reg => console.log('SW registered'))
+          .catch(err => console.log('SW registration failed:', err));
+      });
+    }
+  </script>
+
+</body>
+</html>

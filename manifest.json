@@ -1,0 +1,25 @@
+{
+  "name": "Vĩnh Long Maps",
+  "short_name": "VL Maps",
+  "description": "Tra cứu địa điểm hành chính cũ tỉnh Vĩnh Long",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f0f2f5",
+  "theme_color": "#1a73e8",
+  "lang": "vi",
+  "icons": [
+    {
+      "src": "img/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "img/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
